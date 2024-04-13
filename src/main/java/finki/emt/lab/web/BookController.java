@@ -1,10 +1,9 @@
 package finki.emt.lab.web;
 
-import finki.emt.lab.model.Author;
 import finki.emt.lab.model.Book;
 import finki.emt.lab.model.Category;
+import finki.emt.lab.model.views.NumBooksPerCategoryView;
 import finki.emt.lab.service.BookService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +25,16 @@ public class BookController {
     @GetMapping("/get/{id}")
     public Book getBook (@PathVariable Long id) throws Exception {
         return bookService.findById(id);
+    }
+
+    @GetMapping("/get/perCategory")
+    public List<NumBooksPerCategoryView> getBooksPerCategory () throws Exception {
+        return bookService.getNumBooksPerCategory();
+    }
+
+    @PostMapping("/refresh-view")
+    public void manuallyRefresh () throws Exception {
+        bookService.refreshMaterializedView();
     }
 
     @PostMapping({"/update/{id}", "/edit/{id}"})

@@ -3,11 +3,12 @@ package finki.emt.lab.service.impl;
 import finki.emt.lab.model.Author;
 import finki.emt.lab.model.Book;
 import finki.emt.lab.model.Category;
+import finki.emt.lab.model.views.NumBooksPerCategoryView;
 import finki.emt.lab.repository.BookRepository;
+import finki.emt.lab.repository.NumBookPerCategoryViewRepository;
 import finki.emt.lab.service.AuthorService;
 import finki.emt.lab.service.BookService;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,9 +18,12 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final AuthorService authorService;
 
-    public BookServiceImpl(BookRepository bookRepository, AuthorService authorService) {
+    private final NumBookPerCategoryViewRepository bpcRepository;
+
+    public BookServiceImpl(BookRepository bookRepository, AuthorService authorService, NumBookPerCategoryViewRepository bpcRepository) {
         this.bookRepository = bookRepository;
         this.authorService = authorService;
+        this.bpcRepository = bpcRepository;
     }
 
     @Override
@@ -86,5 +90,15 @@ public class BookServiceImpl implements BookService {
         book.setAvailableCopies(book.getAvailableCopies()+1);
         bookRepository.save(book);
         return book;
+    }
+
+    @Override
+    public void refreshMaterializedView() {
+       bpcRepository.refreshMaterializedView();
+    }
+
+    @Override
+    public List<NumBooksPerCategoryView> getNumBooksPerCategory() {
+        return bpcRepository.findAll();
     }
 }

@@ -1,8 +1,8 @@
 package finki.emt.lab.service;
 
-import finki.emt.lab.model.Author;
 import finki.emt.lab.model.Book;
 import finki.emt.lab.model.Category;
+import finki.emt.lab.model.views.NumBooksPerCategoryView;
 
 import java.util.List;
 
@@ -21,4 +21,6 @@ public interface BookService {
     Book delete (Long id) throws Exception;
     Book borrowBook (Long id) throws Exception;
     Book returnBook (Long id) throws Exception;
+    void refreshMaterializedView();
+    List<NumBooksPerCategoryView> getNumBooksPerCategory();
 }
