@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/book")
+@CrossOrigin(origins = {"http://localhost:3000"})
 public class BookController {
     private final BookService bookService;
 
@@ -21,6 +22,10 @@ public class BookController {
     @GetMapping("/get/all")
     public List<Book> listAuthors (){
         return bookService.listBooks();
+    }
+    @GetMapping("/get/categories")
+    public List<Category> listCategories (){
+        return bookService.getAllCategories();
     }
 
     @GetMapping("/get/{id}")
@@ -42,6 +47,7 @@ public class BookController {
                                @RequestParam Category category,
                                @RequestParam Long authorId,
                                @RequestParam Integer numCopies) throws Exception {
+
         return bookService.createBook(name, category, authorId, numCopies);
     }
 

@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 @Service
 public class BookServiceImpl implements BookService {
@@ -86,5 +87,10 @@ public class BookServiceImpl implements BookService {
         book.setAvailableCopies(book.getAvailableCopies()+1);
         bookRepository.save(book);
         return book;
+    }
+
+    @Override
+    public List<Category> getAllCategories() {
+        return Arrays.stream(Category.values()).toList();
     }
 }

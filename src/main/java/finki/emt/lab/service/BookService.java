@@ -21,4 +21,5 @@ public interface BookService {
     Book delete (Long id) throws Exception;
     Book borrowBook (Long id) throws Exception;
     Book returnBook (Long id) throws Exception;
+    List<Category> getAllCategories();
 }

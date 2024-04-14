@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/country")
+@CrossOrigin(origins = {"http://localhost:3000"})
 public class CountryController {
     private final CountryService countryService;
 
